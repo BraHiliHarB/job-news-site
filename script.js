@@ -1,20 +1,85 @@
+// القائمة في الهاتف
+const menuBtn = document.getElementById("menuBtn");
+const navLinks = document.getElementById("navLinks");
+
+if (menuBtn && navLinks) {
+  menuBtn.addEventListener("click", () => {
+    navLinks.classList.toggle("show");
+    menuBtn.textContent = navLinks.classList.contains("show") ? "×" : "☰";
+  });
+}
+
+// تحميل الأخبار
 async function loadNews() {
-  const res = await fetch("news-data.json");
-  const data = await res.json();
+  try {
+    const res = await fetch("news-data.json");
+    const data = await res.json();
 
-  const newsGrid = document.getElementById("newsGrid");
-  newsGrid.innerHTML = "";
+    const newsGrid = document.getElementById("newsGrid");
+    if (!newsGrid) return;
 
-  data.forEach(item => {
-    const card = document.createElement("div");
+    newsGrid.innerHTML = "";
 
-    card.innerHTML = `
-      <h3>${item.title}</h3>
-      <p>${item.description}</p>
-      <a href="news.html?id=${item.id}">اقرأ التفاصيل</a>
-    `;
+    data.forEach((item) => {
+      const card = document.createElement("article");
+      card.className = "news-card";
+      card.setAttribute("data-category", item.category);
 
-    newsGrid.appendChild(card);
+      card.innerHTML = `
+        <span class="tag">${item.tag}</span>
+        <h3>${item.title}</h3>
+        <p>${item.description}</p>
+        <a href="news.html?id=${item.id}">اقرأ التفاصيل ←</a>
+      `;
+
+      newsGrid.appendChild(card);
+    });
+
+    setupFilters();
+    setupSearch();
+
+  } catch (error) {
+    console.error("خطأ في تحميل الأخبار:", error);
+  }
+}
+
+// الفلاتر
+function setupFilters() {
+  const filters = document.querySelectorAll(".filter");
+
+  filters.forEach((filter) => {
+    filter.addEventListener("click", () => {
+      filters.forEach((btn) => btn.classList.remove("active"));
+      filter.classList.add("active");
+
+      const selected = filter.dataset.filter;
+      const cards = document.querySelectorAll(".news-card");
+
+      cards.forEach((card) => {
+        card.style.display =
+          selected === "all" || card.dataset.category === selected
+            ? "block"
+            : "none";
+      });
+    });
+  });
+}
+
+// البحث
+function setupSearch() {
+  const searchBtn = document.getElementById("searchBtn");
+  const searchInput = document.getElementById("searchInput");
+
+  if (!searchBtn || !searchInput) return;
+
+  searchBtn.addEventListener("click", () => {
+    const keyword = searchInput.value.trim().toLowerCase();
+    const cards = document.querySelectorAll(".news-card");
+
+    cards.forEach((card) => {
+      const text = card.innerText.toLowerCase();
+      card.style.display = text.includes(keyword) ? "block" : "none";
+    });
   });
 }
 
