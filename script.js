@@ -1,15 +1,15 @@
-// MENU TOGGLE (mobile)
+// القائمة في الهاتف
 const menuBtn = document.getElementById("menuBtn");
 const navLinks = document.getElementById("navLinks");
 
-if (menuBtn) {
+if (menuBtn && navLinks) {
   menuBtn.addEventListener("click", () => {
     navLinks.classList.toggle("show");
     menuBtn.textContent = navLinks.classList.contains("show") ? "×" : "☰";
   });
 }
 
-// LOAD NEWS FROM JSON
+// تحميل الأخبار من JSON
 async function loadNews() {
   try {
     const res = await fetch("news-data.json");
@@ -29,7 +29,7 @@ async function loadNews() {
         <span class="tag">${item.tag}</span>
         <h3>${item.title}</h3>
         <p>${item.description}</p>
-        <a href="${item.link}">اقرأ التفاصيل ←</a>
+        <a href="news.html?id=${item.id}">اقرأ التفاصيل ←</a>
       `;
 
       newsGrid.appendChild(card);
@@ -38,15 +38,14 @@ async function loadNews() {
     setupFilters();
     setupSearch();
 
-  } catch (err) {
-    console.error("Error loading news:", err);
+  } catch (error) {
+    console.error("خطأ في تحميل الأخبار:", error);
   }
 }
 
-// FILTER SYSTEM
+// الفلترة
 function setupFilters() {
   const filters = document.querySelectorAll(".filter");
-  const cards = document.querySelectorAll(".news-card");
 
   filters.forEach((filter) => {
     filter.addEventListener("click", () => {
@@ -54,27 +53,27 @@ function setupFilters() {
       filter.classList.add("active");
 
       const selected = filter.dataset.filter;
+      const cards = document.querySelectorAll(".news-card");
 
       cards.forEach((card) => {
-        if (selected === "all" || card.dataset.category === selected) {
-          card.style.display = "block";
-        } else {
-          card.style.display = "none";
-        }
+        card.style.display =
+          selected === "all" || card.dataset.category === selected
+            ? "block"
+            : "none";
       });
     });
   });
 }
 
-// SEARCH SYSTEM
+// البحث
 function setupSearch() {
   const searchBtn = document.getElementById("searchBtn");
   const searchInput = document.getElementById("searchInput");
 
-  if (!searchBtn) return;
+  if (!searchBtn || !searchInput) return;
 
   searchBtn.addEventListener("click", () => {
-    const keyword = searchInput.value.toLowerCase();
+    const keyword = searchInput.value.trim().toLowerCase();
     const cards = document.querySelectorAll(".news-card");
 
     cards.forEach((card) => {
@@ -84,5 +83,4 @@ function setupSearch() {
   });
 }
 
-// START
 loadNews();
