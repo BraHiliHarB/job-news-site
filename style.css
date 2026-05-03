@@ -266,14 +266,18 @@ input {
 }
 
 .hero-card p {
-  position: relative;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-right: 5px solid var(--primary2);
-  padding: 16px 18px;
+  background: #f1f5f9;            /* خلفية واضحة */
+  border: 1px solid #dbe3ef;
+  border-right: 6px solid var(--primary2);
+
+  color: #0f172a;                /* نص غامق وواضح */
+  font-weight: 800;
+
   border-radius: 18px;
+  padding: 16px 18px;
   margin-bottom: 14px;
-  font-weight: 900;
+
+  transition: 0.2s;
 }
 
 /* SECTIONS */
