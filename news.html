@@ -21,7 +21,7 @@
   <a class="nav-cta" href="index.html">الرئيسية</a>
 </header>
 
-<main class="article-page" id="articlePage">
+<main class="article-page">
 
   <section class="article-hero">
     <a href="index.html" class="back-link">← الرجوع إلى الرئيسية</a>
@@ -33,7 +33,7 @@
     <p class="article-subtitle" id="articleDescription"></p>
 
     <div class="article-meta">
-      <span id="articleDate">📅 تاريخ النشر: اليوم</span>
+      <span id="articleDate">📅 تاريخ النشر</span>
       <span id="articleCategory">🏷️ التصنيف</span>
       <span id="articleCountry">🌍 الدولة</span>
       <span id="articleDeadline">⏳ آخر أجل</span>
@@ -56,7 +56,7 @@
         </div>
 
         <div class="info-box">
-          <strong id="infoStatus">مفتوح</strong>
+          <strong id="infoStatus">...</strong>
           <span>حالة التقديم</span>
         </div>
       </div>
@@ -94,7 +94,6 @@
     </article>
 
     <aside class="side-card">
-
       <h3>ملخص سريع</h3>
 
       <div class="side-item">
@@ -104,12 +103,12 @@
 
       <div class="side-item">
         <b>الفئة</b>
-        <span id="sideAudience">الشباب</span>
+        <span>الشباب</span>
       </div>
 
       <div class="side-item">
         <b>الرابط</b>
-        رسمي
+        <span>رسمي / خارجي</span>
       </div>
 
       <a href="#"
@@ -119,7 +118,6 @@
          id="sideApplyLink">
          فتح رابط التقديم
       </a>
-
     </aside>
 
   </div>
@@ -128,57 +126,63 @@
 
 <script>
 async function loadArticle() {
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get("id");
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
 
-  const res = await fetch("news-data.json");
-  const data = await res.json();
+    const res = await fetch("news-data.json");
+    const data = await res.json();
 
-  const article = data.find(item => String(item.id) === String(id));
+    const article = data.find(item => String(item.id) === String(id));
 
-  if (!article) {
-    document.getElementById("articleTitle").textContent = "المقال غير موجود";
-    document.getElementById("articleDescription").textContent = "لم يتم العثور على هذه الفرصة.";
-    return;
+    if (!article) {
+      document.getElementById("articleTitle").textContent = "المقال غير موجود";
+      document.getElementById("articleDescription").textContent = "لم يتم العثور على هذه الفرصة.";
+      return;
+    }
+
+    document.title = article.title + " | فرصتي";
+
+    document.getElementById("articleTag").textContent = article.tag;
+    document.getElementById("articleTitle").textContent = article.title;
+    document.getElementById("articleDescription").textContent = article.description;
+
+    document.getElementById("articleDate").textContent = "📅 تاريخ النشر: " + article.date;
+    document.getElementById("articleCategory").textContent = "🏷️ التصنيف: " + article.tag;
+    document.getElementById("articleCountry").textContent = "🌍 الدولة: " + article.country;
+    document.getElementById("articleDeadline").textContent = "⏳ آخر أجل: " + article.deadline;
+
+    document.getElementById("infoCountry").textContent = article.country;
+    document.getElementById("infoStatus").textContent = article.status;
+
+    document.getElementById("articleIntro").textContent = article.intro;
+    document.getElementById("articleDetails").textContent = article.details;
+    document.getElementById("articleHowToApply").textContent = article.howToApply;
+
+    const reqList = document.getElementById("articleRequirements");
+    reqList.innerHTML = "";
+    article.requirements.forEach(req => {
+      const li = document.createElement("li");
+      li.textContent = req;
+      reqList.appendChild(li);
+    });
+
+    const benList = document.getElementById("articleBenefits");
+    benList.innerHTML = "";
+    article.benefits.forEach(ben => {
+      const li = document.createElement("li");
+      li.textContent = ben;
+      benList.appendChild(li);
+    });
+
+    document.getElementById("applyLink").href = article.officialLink;
+    document.getElementById("sideApplyLink").href = article.officialLink;
+    document.getElementById("sideType").textContent = article.tag;
+
+  } catch (error) {
+    console.error(error);
+    document.getElementById("articleTitle").textContent = "حدث خطأ في تحميل المقال";
   }
-
-  document.title = article.title + " | فرصتي";
-
-  document.getElementById("articleTag").textContent = article.tag;
-  document.getElementById("articleTitle").textContent = article.title;
-  document.getElementById("articleDescription").textContent = article.description;
-
-  document.getElementById("articleDate").textContent = "📅 تاريخ النشر: " + article.date;
-  document.getElementById("articleCategory").textContent = "🏷️ التصنيف: " + article.tag;
-  document.getElementById("articleCountry").textContent = "🌍 الدولة: " + article.country;
-  document.getElementById("articleDeadline").textContent = "⏳ آخر أجل: " + article.deadline;
-
-  document.getElementById("infoCountry").textContent = article.country;
-  document.getElementById("infoStatus").textContent = article.status;
-
-  document.getElementById("articleIntro").textContent = article.intro;
-  document.getElementById("articleDetails").textContent = article.details;
-  document.getElementById("articleHowToApply").textContent = article.howToApply;
-
-  const reqList = document.getElementById("articleRequirements");
-  reqList.innerHTML = "";
-  article.requirements.forEach(req => {
-    const li = document.createElement("li");
-    li.textContent = req;
-    reqList.appendChild(li);
-  });
-
-  const benList = document.getElementById("articleBenefits");
-  benList.innerHTML = "";
-  article.benefits.forEach(ben => {
-    const li = document.createElement("li");
-    li.textContent = ben;
-    benList.appendChild(li);
-  });
-
-  document.getElementById("applyLink").href = article.officialLink;
-  document.getElementById("sideApplyLink").href = article.officialLink;
-  document.getElementById("sideType").textContent = article.tag;
 }
 
 loadArticle();
