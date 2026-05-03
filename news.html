@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>تفاصيل الفرصة | فرصتي</title>
+<meta name="description" content="تفاصيل الفرصة مع رابط التقديم الرسمي.">
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+  <a href="index.html" class="brand">
+    <span class="logo">ف</span>
+    <span>فرصتي</span>
+  </a>
+
+  <a class="nav-cta" href="index.html">الرئيسية</a>
+</header>
+
+<main class="article-page" id="articlePage">
+
+  <section class="article-hero">
+    <a href="index.html" class="back-link">← الرجوع إلى الرئيسية</a>
+
+    <span class="article-badge" id="articleTag">...</span>
+
+    <h1 class="article-title" id="articleTitle">جاري تحميل المقال...</h1>
+
+    <p class="article-subtitle" id="articleDescription"></p>
+
+    <div class="article-meta">
+      <span id="articleDate">📅 تاريخ النشر: اليوم</span>
+      <span id="articleCategory">🏷️ التصنيف</span>
+      <span id="articleCountry">🌍 الدولة</span>
+      <span id="articleDeadline">⏳ آخر أجل</span>
+    </div>
+  </section>
+
+  <div class="article-layout">
+
+    <article class="article-content">
+
+      <div class="info-grid">
+        <div class="info-box">
+          <strong id="infoCountry">...</strong>
+          <span>الدولة</span>
+        </div>
+
+        <div class="info-box">
+          <strong>رسمي</strong>
+          <span>نوع الرابط</span>
+        </div>
+
+        <div class="info-box">
+          <strong id="infoStatus">مفتوح</strong>
+          <span>حالة التقديم</span>
+        </div>
+      </div>
+
+      <p id="articleIntro"></p>
+
+      <h2>📌 تفاصيل الفرصة</h2>
+      <p id="articleDetails"></p>
+
+      <h2>📋 الشروط المطلوبة</h2>
+      <ul id="articleRequirements"></ul>
+
+      <h2>💰 المميزات</h2>
+      <ul id="articleBenefits"></ul>
+
+      <h2>📝 طريقة التقديم</h2>
+      <p id="articleHowToApply"></p>
+
+      <div class="warning">
+        ⚠️ لا تدفع أي رسوم لأي وسيط. استخدم الرابط الرسمي فقط وتأكد من مصدر الإعلان.
+      </div>
+
+      <div class="apply-box">
+        <p>اضغط هنا للانتقال إلى الموقع الرسمي:</p>
+
+        <a href="#"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="apply-btn"
+           id="applyLink">
+           🔗 التقديم الرسمي
+        </a>
+      </div>
+
+    </article>
+
+    <aside class="side-card">
+
+      <h3>ملخص سريع</h3>
+
+      <div class="side-item">
+        <b>نوع الفرصة</b>
+        <span id="sideType">...</span>
+      </div>
+
+      <div class="side-item">
+        <b>الفئة</b>
+        <span id="sideAudience">الشباب</span>
+      </div>
+
+      <div class="side-item">
+        <b>الرابط</b>
+        رسمي
+      </div>
+
+      <a href="#"
+         target="_blank"
+         rel="noopener noreferrer"
+         class="share-btn"
+         id="sideApplyLink">
+         فتح رابط التقديم
+      </a>
+
+    </aside>
+
+  </div>
+
+</main>
+
+<script>
+async function loadArticle() {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+
+  const res = await fetch("news-data.json");
+  const data = await res.json();
+
+  const article = data.find(item => String(item.id) === String(id));
+
+  if (!article) {
+    document.getElementById("articleTitle").textContent = "المقال غير موجود";
+    document.getElementById("articleDescription").textContent = "لم يتم العثور على هذه الفرصة.";
+    return;
+  }
+
+  document.title = article.title + " | فرصتي";
+
+  document.getElementById("articleTag").textContent = article.tag;
+  document.getElementById("articleTitle").textContent = article.title;
+  document.getElementById("articleDescription").textContent = article.description;
+
+  document.getElementById("articleDate").textContent = "📅 تاريخ النشر: " + article.date;
+  document.getElementById("articleCategory").textContent = "🏷️ التصنيف: " + article.tag;
+  document.getElementById("articleCountry").textContent = "🌍 الدولة: " + article.country;
+  document.getElementById("articleDeadline").textContent = "⏳ آخر أجل: " + article.deadline;
+
+  document.getElementById("infoCountry").textContent = article.country;
+  document.getElementById("infoStatus").textContent = article.status;
+
+  document.getElementById("articleIntro").textContent = article.intro;
+  document.getElementById("articleDetails").textContent = article.details;
+  document.getElementById("articleHowToApply").textContent = article.howToApply;
+
+  const reqList = document.getElementById("articleRequirements");
+  reqList.innerHTML = "";
+  article.requirements.forEach(req => {
+    const li = document.createElement("li");
+    li.textContent = req;
+    reqList.appendChild(li);
+  });
+
+  const benList = document.getElementById("articleBenefits");
+  benList.innerHTML = "";
+  article.benefits.forEach(ben => {
+    const li = document.createElement("li");
+    li.textContent = ben;
+    benList.appendChild(li);
+  });
+
+  document.getElementById("applyLink").href = article.officialLink;
+  document.getElementById("sideApplyLink").href = article.officialLink;
+  document.getElementById("sideType").textContent = article.tag;
+}
+
+loadArticle();
+</script>
+
+</body>
+</html>
