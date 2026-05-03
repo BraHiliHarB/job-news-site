@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>فرصتي | وظائف وهجرة ومنح</title>
-  <meta name="description" content="منصة فرصتي لنشر فرص العمل، الهجرة، المنح، الزمالات والتطوع للشباب." />
+<title>فرصتي | وظائف وهجرة ومنح للشباب</title>
+<meta name="description" content="موقع فرصتي لنشر فرص العمل، الهجرة، المنح والتطوع للشباب بروابط رسمية.">
 
-  <link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <header class="navbar">
-  <a href="#" class="brand">
+
+  <a href="index.html" class="brand">
     <span class="logo">ف</span>
     <span>فرصتي</span>
   </a>
@@ -20,7 +22,7 @@
   <button class="menu-btn" id="menuBtn">☰</button>
 
   <nav class="nav-links" id="navLinks">
-    <a href="#">الرئيسية</a>
+    <a href="index.html">الرئيسية</a>
     <a href="#jobs">وظائف</a>
     <a href="#migration">هجرة</a>
     <a href="#scholarships">منح</a>
@@ -28,18 +30,23 @@
   </nav>
 
   <a class="nav-cta" href="#latest">آخر الفرص</a>
+
 </header>
 
 <section class="hero">
+
   <div class="hero-content">
-    <span class="badge">منصة فرص للشباب</span>
+
+    <span class="badge">🚀 منصة فرص للشباب</span>
+
     <h1>اكتشف فرص العمل، الهجرة، المنح والتطوع بسرعة</h1>
+
     <p>
-      منصة خفيفة وسريعة تجمع الفرص المهمة مع روابط التقديم الرسمية.
+      موقع سريع واحترافي يجمع لك الفرص الموثوقة مع روابط التقديم الرسمية.
     </p>
 
     <div class="search-box">
-      <input id="searchInput" type="text" placeholder="ابحث عن فرصة..." />
+      <input id="searchInput" type="text" placeholder="ابحث عن فرصة...">
       <button id="searchBtn">بحث</button>
     </div>
 
@@ -48,33 +55,58 @@
       <div><b>+30</b><span>دولة</span></div>
       <div><b>يوميًا</b><span>تحديث</span></div>
     </div>
+
   </div>
 
   <div class="hero-card">
     <div class="card-line"></div>
     <h3>فرص اليوم</h3>
-    <p>💼 وظيفة في أوروبا</p>
-    <p>🎓 منحة ممولة</p>
-    <p>🌍 برنامج هجرة</p>
+    <p>💼 وظائف عالمية</p>
+    <p>🎓 منح ممولة</p>
+    <p>🌍 برامج هجرة</p>
     <p>🤝 تطوع دولي</p>
   </div>
+
 </section>
 
 <section class="categories">
+
   <h2>الأقسام الرئيسية</h2>
 
   <div class="category-grid">
-    <article id="jobs">💼 <h3>وظائف</h3><p>محلية وعالمية</p></article>
-    <article id="migration">🌍 <h3>هجرة</h3><p>برامج رسمية</p></article>
-    <article id="scholarships">🎓 <h3>منح</h3><p>ممولة وجزئية</p></article>
-    <article id="volunteer">🤝 <h3>تطوع</h3><p>فرص للشباب</p></article>
+
+    <article id="jobs">
+      💼
+      <h3>وظائف</h3>
+      <p>فرص عمل محلية وعالمية</p>
+    </article>
+
+    <article id="migration">
+      🌍
+      <h3>هجرة</h3>
+      <p>برامج هجرة رسمية</p>
+    </article>
+
+    <article id="scholarships">
+      🎓
+      <h3>منح</h3>
+      <p>منح وزمالات دراسية</p>
+    </article>
+
+    <article id="volunteer">
+      🤝
+      <h3>تطوع</h3>
+      <p>برامج تطوعية للشباب</p>
+    </article>
+
   </div>
+
 </section>
 
 <section class="latest" id="latest">
+
   <div class="section-title">
     <h2>آخر الفرص</h2>
-    <a href="news/job-example.html">اقرأ التفاصيل ←</a>
   </div>
 
   <div class="filters">
@@ -85,47 +117,25 @@
     <button class="filter" data-filter="volunteer">تطوع</button>
   </div>
 
-  <div class="news-grid">
-    <article class="news-card" data-category="jobs">
-      <span class="tag">وظائف</span>
-      <h3>فرص عمل في أوروبا بعقود رسمية</h3>
-      <p>فرصة موجهة للشباب الباحثين عن عمل خارج بلدهم.</p>
-      <a href="news/job-example.html">اقرأ التفاصيل ←</a>
-    </article>
+  <!-- الأخبار ستظهر هنا تلقائياً من news-data.json -->
+  <div class="news-grid" id="newsGrid"></div>
 
-    <article class="news-card" data-category="scholarships">
-      <span class="tag">منح</span>
-      <h3>منحة دراسية ممولة بالكامل</h3>
-      <p>منحة تشمل الدراسة وبعض المصاريف حسب البرنامج.</p>
-      <a href="news/scholarship-example.html">اقرأ التفاصيل ←</a>
-    </article>
-
-    <article class="news-card" data-category="migration">
-      <span class="tag">هجرة</span>
-      <h3>برنامج هجرة للعمال المهرة</h3>
-      <p>برنامج رسمي لفائدة أصحاب الخبرات المهنية.</p>
-      <a href="news/migration-example.html">اقرأ التفاصيل ←</a>
-    </article>
-
-    <article class="news-card" data-category="volunteer">
-      <span class="tag">تطوع</span>
-      <h3>فرصة تطوع دولي للشباب</h3>
-      <p>برنامج تطوعي يساعدك على اكتساب تجربة دولية.</p>
-      <a href="news/volunteer-example.html">اقرأ التفاصيل ←</a>
-    </article>
-  </div>
 </section>
 
 <section class="cta">
-  <h2>المرحلة القادمة: الأتمتة</h2>
-  <p>سنربط الموقع لاحقاً بمصادر أخبار و Telegram و RSS لجلب الفرص تلقائياً.</p>
+  <h2>🚀 قريباً: نظام نشر تلقائي</h2>
+  <p>
+    سيتم ربط الموقع بمصادر رسمية و Telegram و RSS لنشر الأخبار تلقائياً.
+  </p>
 </section>
 
 <footer>
   <h3>فرصتي</h3>
+  <p>منصة أخبار وفرص للشباب الباحث عن العمل والهجرة والمنح والتطوع.</p>
   <p>© 2026 جميع الحقوق محفوظة</p>
 </footer>
 
 <script src="script.js"></script>
+
 </body>
 </html>

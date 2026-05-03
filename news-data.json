@@ -1,0 +1,30 @@
+[
+  {
+    "title": "🇨🇦 فرصة عمل في كندا 2026",
+    "category": "jobs",
+    "tag": "وظائف",
+    "description": "فرصة للعمال المهرة مع تفاصيل كاملة وطريقة التقديم.",
+    "link": "news/job-example.html"
+  },
+  {
+    "title": "🎓 منحة ممولة بالكامل 2026",
+    "category": "scholarships",
+    "tag": "منح",
+    "description": "منحة تشمل الدراسة والسكن ومصاريف شهرية.",
+    "link": "news/scholarship-example.html"
+  },
+  {
+    "title": "🌍 برنامج هجرة جديد",
+    "category": "migration",
+    "tag": "هجرة",
+    "description": "برنامج رسمي للعمال المهرة للعمل بالخارج.",
+    "link": "news/migration-example.html"
+  },
+  {
+    "title": "🤝 فرصة تطوع دولي",
+    "category": "volunteer",
+    "tag": "تطوع",
+    "description": "برنامج تطوعي يمنحك تجربة عالمية.",
+    "link": "news/volunteer-example.html"
+  }
+]
