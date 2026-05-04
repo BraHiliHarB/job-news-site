@@ -1,6 +1,7 @@
-// القائمة في الهاتف
 const menuBtn = document.getElementById("menuBtn");
 const navLinks = document.getElementById("navLinks");
+
+const API_URL = "https://script.google.com/macros/s/AKfycbziph2ncuar_liWyyieIln2RBbMfBolBcep9oyPa_HOGHBjMcaNczY3qc556CR-2pzX/exec";
 
 if (menuBtn && navLinks) {
   menuBtn.addEventListener("click", () => {
@@ -9,10 +10,9 @@ if (menuBtn && navLinks) {
   });
 }
 
-// تحميل الأخبار
 async function loadNews() {
   try {
-    const res = await fetch("news-data.json");
+    const res = await fetch(API_URL);
     const data = await res.json();
 
     const newsGrid = document.getElementById("newsGrid");
@@ -43,7 +43,6 @@ async function loadNews() {
   }
 }
 
-// الفلاتر
 function setupFilters() {
   const filters = document.querySelectorAll(".filter");
 
@@ -65,7 +64,6 @@ function setupFilters() {
   });
 }
 
-// البحث
 function setupSearch() {
   const searchBtn = document.getElementById("searchBtn");
   const searchInput = document.getElementById("searchInput");
