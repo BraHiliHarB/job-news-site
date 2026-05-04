@@ -130,7 +130,7 @@ async function loadArticle() {
     const params = new URLSearchParams(window.location.search);
     const id = params.get("id");
 
-    const res = await fetch("news-data.json");
+    const res = await fetch("https://script.google.com/macros/s/AKfycbziph2ncuar_liWyyieIln2RBbMfBolBcep9oyPa_HOGHBjMcaNczY3qc556CR-2pzX/exec");
     const data = await res.json();
 
     const article = data.find(item => String(item.id) === String(id));
