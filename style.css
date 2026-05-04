@@ -780,4 +780,42 @@ footer h3 {
   .hero-card {
     min-height: auto;
   }
+}.hero-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+.hero-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-right: 6px solid var(--primary2);
+
+  padding: 14px;
+  border-radius: 18px;
+
+  transition: 0.25s;
+}
+
+.hero-item span {
+  font-size: 24px;
+}
+
+.hero-item b {
+  display: block;
+  color: var(--primary);
+}
+
+.hero-item small {
+  color: var(--muted);
+}
+
+.hero-item:hover {
+  background: #e2e8f0;
+  transform: translateX(-5px);
 }
