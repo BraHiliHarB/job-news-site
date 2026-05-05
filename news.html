@@ -8,6 +8,39 @@
 <meta name="description" content="تفاصيل الفرصة مع رابط التقديم الرسمي.">
 
 <link rel="stylesheet" href="style.css">
+<style>
+  /* تنسيقات الإطار الأحمر الخاص بالنص الأصلي */
+  .original-offer-box {
+    background-color: #fff5f5;
+    border: 2px dashed #ef4444;
+    border-radius: 12px;
+    padding: 28px 24px 24px;
+    margin: 35px 0;
+    position: relative;
+  }
+  .original-offer-badge {
+    position: absolute;
+    top: -16px;
+    right: 20px;
+    background-color: #ef4444;
+    color: white;
+    padding: 6px 18px;
+    border-radius: 8px;
+    font-weight: 900;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+  }
+  .original-offer-text {
+    color: #7f1d1d;
+    font-size: 17px;
+    line-height: 1.9;
+    font-weight: bold;
+    white-space: pre-wrap;
+  }
+</style>
 </head>
 
 <body>
@@ -63,8 +96,13 @@
 
       <p id="articleIntro"></p>
 
-      <h2>📌 تفاصيل الفرصة</h2>
-      <p id="articleDetails"></p>
+      <!-- الإطار الأحمر للنص الأصلي -->
+      <div class="original-offer-box">
+        <div class="original-offer-badge">
+          <span>🔴</span> الإعلان الأصلي (غير معدل)
+        </div>
+        <p class="original-offer-text" id="articleOriginalText"></p>
+      </div>
 
       <h2>📋 الشروط المطلوبة</h2>
       <ul id="articleRequirements"></ul>
@@ -80,14 +118,14 @@
       </div>
 
       <div class="apply-box">
-        <p>اضغط هنا للانتقال إلى الموقع الرسمي:</p>
+        <p>يُرجى قراءة الإعلان الأصلي في الأعلى بعناية، ثم اضغط هنا للانتقال إلى الموقع الرسمي للتقديم:</p>
 
         <a href="#"
            target="_blank"
            rel="noopener noreferrer"
            class="apply-btn"
            id="applyLink">
-           🔗 التقديم الرسمي
+           🔗 التقديم الرسمي من هنا
         </a>
       </div>
 
@@ -137,7 +175,6 @@ async function loadArticle() {
 
     if (!article) {
       document.getElementById("articleTitle").textContent = "المقال غير موجود";
-      document.getElementById("articleDescription").textContent = "لم يتم العثور على هذه الفرصة.";
       return;
     }
 
@@ -147,7 +184,13 @@ async function loadArticle() {
     document.getElementById("articleTitle").textContent = article.title;
     document.getElementById("articleDescription").textContent = article.description;
 
-    document.getElementById("articleDate").textContent = "📅 تاريخ النشر: " + article.date;
+    // إصلاح مشكلة التاريخ هنا
+    let cleanDate = article.date;
+    if (cleanDate && cleanDate.includes("T")) {
+        cleanDate = cleanDate.split("T")[0]; // يقتطع التاريخ فقط ويتجاهل الوقت
+    }
+
+    document.getElementById("articleDate").textContent = "📅 تاريخ النشر: " + cleanDate;
     document.getElementById("articleCategory").textContent = "🏷️ التصنيف: " + article.tag;
     document.getElementById("articleCountry").textContent = "🌍 الدولة: " + article.country;
     document.getElementById("articleDeadline").textContent = "⏳ آخر أجل: " + article.deadline;
@@ -156,7 +199,10 @@ async function loadArticle() {
     document.getElementById("infoStatus").textContent = article.status;
 
     document.getElementById("articleIntro").textContent = article.intro;
-    document.getElementById("articleDetails").textContent = article.details;
+    
+    // وضع النص الأصلي في الإطار الأحمر
+    document.getElementById("articleOriginalText").textContent = article.details; 
+
     document.getElementById("articleHowToApply").textContent = article.howToApply;
 
     const reqList = document.getElementById("articleRequirements");
