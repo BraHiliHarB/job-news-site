@@ -1,7 +1,8 @@
 const menuBtn = document.getElementById("menuBtn");
 const navLinks = document.getElementById("navLinks");
 
-const API_URL = "https://script.google.com/macros/s/AKfycbziph2ncuar_liWyyieIln2RBbMfBolBcep9oyPa_HOGHBjMcaNczY3qc556CR-2pzX/exec";
+// تم تحديث الرابط هنا بنجاح
+const API_URL = "https://script.google.com/macros/s/AKfycby0OcWta_DLcycnumAyT_4kY79IOeJpsx6pAa1SJur4Dgr1zj90yPm--_k1zjtyqC6R/exec";
 
 if (menuBtn && navLinks) {
   menuBtn.addEventListener("click", () => {
