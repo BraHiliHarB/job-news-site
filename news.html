@@ -201,35 +201,24 @@ async function loadArticle() {
     document.getElementById("articleIntro").textContent = article.intro;
     
     // وضع النص الأصلي في الإطار الأحمر
-    document.getElementById("articleOriginalText").textContent = article.details; 
+    // عرض النص الأصلي أو الـ PDF داخل الإطار الأحمر
+    const originalBox = document.getElementById("articleOriginalText");
+    const detailsContent = String(article.details).trim();
 
-    document.getElementById("articleHowToApply").textContent = article.howToApply;
-
-    const reqList = document.getElementById("articleRequirements");
-    reqList.innerHTML = "";
-    article.requirements.forEach(req => {
-      const li = document.createElement("li");
-      li.textContent = req;
-      reqList.appendChild(li);
-    });
-
-    const benList = document.getElementById("articleBenefits");
-    benList.innerHTML = "";
-    article.benefits.forEach(ben => {
-      const li = document.createElement("li");
-      li.textContent = ben;
-      benList.appendChild(li);
-    });
-
-    document.getElementById("applyLink").href = article.officialLink;
-    document.getElementById("sideApplyLink").href = article.officialLink;
-    document.getElementById("sideType").textContent = article.tag;
-
-  } catch (error) {
-    console.error(error);
-    const titleEl = document.getElementById("articleTitle");
-    if(titleEl) titleEl.textContent = "حدث خطأ في تحميل المقال";
-  }
+    if (detailsContent.startsWith("http")) {
+      // إذا كان الرابط صورة
+      if (detailsContent.match(/\.(jpeg|jpg|gif|png)$/i)) {
+        originalBox.innerHTML = `<img src="${detailsContent}" alt="الإعلان الأصلي" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">`;
+      } 
+      // إذا كان ملف PDF أو مرفق من التشغيل العمومي
+      else {
+        const viewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(detailsContent)}&embedded=true`;
+        originalBox.innerHTML = `<iframe src="${viewerUrl}" width="100%" height="650px" style="border: none; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);"></iframe>`;
+      }
+    } else {
+      // إذا لم يجد PDF، يعرض النص العادي
+      originalBox.textContent = detailsContent;
+    }
 }
 
 loadArticle();
