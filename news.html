@@ -1,250 +1,77 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>تفاصيل الفرصة | فرصتي</title>
-<meta name="description" content="تفاصيل الفرصة مع رابط التقديم الرسمي.">
-
-<link rel="stylesheet" href="style.css">
-<style>
-  /* تنسيقات الإطار الأحمر الخاص بالنص/الملف الأصلي */
-  .original-offer-box {
-    background-color: #fff5f5;
-    border: 2px dashed #ef4444;
-    border-radius: 12px;
-    padding: 28px 24px 24px;
-    margin: 35px 0;
-    position: relative;
-  }
-  .original-offer-badge {
-    position: absolute;
-    top: -16px;
-    right: 20px;
-    background-color: #ef4444;
-    color: white;
-    padding: 6px 18px;
-    border-radius: 8px;
-    font-weight: 900;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
-  }
-  .original-offer-text {
-    color: #7f1d1d;
-    font-size: 17px;
-    line-height: 1.9;
-    font-weight: bold;
-    white-space: pre-wrap;
-    overflow: hidden;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل الفرصة | فرصتي</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
-<header class="navbar">
-  <a href="index.html" class="brand">
-    <span class="logo">ف</span>
-    <span>فرصتي</span>
-  </a>
-
-  <a class="nav-cta" href="index.html">الرئيسية</a>
-</header>
-
-<main class="article-page">
-
-  <section class="article-hero">
-    <a href="index.html" class="back-link">← الرجوع إلى الرئيسية</a>
-
-    <span class="article-badge" id="articleTag">...</span>
-
-    <h1 class="article-title" id="articleTitle">جاري تحميل المقال...</h1>
-
-    <p class="article-subtitle" id="articleDescription"></p>
-
-    <div class="article-meta">
-      <span id="articleDate">📅 تاريخ النشر</span>
-      <span id="articleCategory">🏷️ التصنيف</span>
-      <span id="articleCountry">🌍 الدولة</span>
-      <span id="articleDeadline">⏳ آخر أجل</span>
-    </div>
-  </section>
-
-  <div class="article-layout">
-
-    <article class="article-content">
-
-      <div class="info-grid">
-        <div class="info-box">
-          <strong id="infoCountry">...</strong>
-          <span>الدولة</span>
-        </div>
-
-        <div class="info-box">
-          <strong>رسمي</strong>
-          <span>نوع الرابط</span>
-        </div>
-
-        <div class="info-box">
-          <strong id="infoStatus">...</strong>
-          <span>حالة التقديم</span>
-        </div>
-      </div>
-
-      <p id="articleIntro"></p>
-
-      <!-- الإطار الأحمر لعرض الإعلان الأصلي (PDF أو صورة أو نص) -->
-      <div class="original-offer-box">
-        <div class="original-offer-badge">
-          <span>🔴</span> الإعلان الأصلي 
-        </div>
-        <div class="original-offer-text" id="articleOriginalText">جاري تحميل الإعلان الأصلي...</div>
-      </div>
-
-      <h2>📋 الشروط المطلوبة</h2>
-      <ul id="articleRequirements"></ul>
-
-      <h2>💰 المميزات</h2>
-      <ul id="articleBenefits"></ul>
-
-      <h2>📝 طريقة التقديم</h2>
-      <p id="articleHowToApply"></p>
-
-      <div class="warning">
-        ⚠️ لا تدفع أي رسوم لأي وسيط. استخدم الرابط الرسمي فقط وتأكد من مصدر الإعلان.
-      </div>
-
-      <div class="apply-box">
-        <p>يُرجى قراءة الإعلان الأصلي في الأعلى بعناية، ثم اضغط هنا للانتقال إلى الموقع الرسمي للتقديم:</p>
-
-        <a href="#"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="apply-btn"
-           id="applyLink">
-           🔗 التقديم الرسمي من هنا
+    <header class="navbar">
+        <a href="index.html" class="brand">
+            <span class="logo">ف</span>
+            <span>فرصتي</span>
         </a>
-      </div>
+        <a class="nav-cta" href="index.html">الرئيسية</a>
+    </header>
 
-    </article>
+    <main class="container article-page">
+        <a href="index.html" class="back-link" style="display:inline-block; margin-bottom:20px; font-weight:bold;">← الرجوع للرئيسية</a>
+        
+        <h1 id="articleTitle" style="color:#1e3a8a; margin-bottom:10px;">جاري تحميل المقال...</h1>
+        <p id="articleDescription" style="color:#4b5563; font-size:18px; margin-bottom:20px;"></p>
 
-    <aside class="side-card">
-      <h3>ملخص سريع</h3>
+        <!-- الإطار الأحمر لعرض PDF أو الإعلان الأصلي -->
+        <div class="original-offer-box">
+            <div class="original-offer-badge"><span>🔴</span> الإعلان الأصلي (PDF)</div>
+            <div id="articleOriginalText" style="margin-top:20px; font-weight:bold; color:#7f1d1d;">جاري تحميل المرفق...</div>
+        </div>
 
-      <div class="side-item">
-        <b>نوع الفرصة</b>
-        <span id="sideType">...</span>
-      </div>
+        <div class="article-content" style="margin-top:40px;">
+            <h2 style="color:#1e3a8a; border-bottom:2px solid #e5e7eb; padding-bottom:10px;">📋 الشروط المطلوبة</h2>
+            <ul id="articleRequirements" style="line-height:2; margin-bottom:30px;"></ul>
 
-      <div class="side-item">
-        <b>الفئة</b>
-        <span>الشباب</span>
-      </div>
+            <h2 style="color:#1e3a8a; border-bottom:2px solid #e5e7eb; padding-bottom:10px;">💰 المميزات</h2>
+            <ul id="articleBenefits" style="line-height:2; margin-bottom:30px;"></ul>
 
-      <div class="side-item">
-        <b>الرابط</b>
-        <span>رسمي / خارجي</span>
-      </div>
+            <div style="background-color:#eff6ff; padding:20px; border-radius:8px; text-align:center; margin-top:40px;">
+                <p style="margin-bottom:15px; font-weight:bold;">يُرجى قراءة الإعلان الأصلي في الأعلى بعناية، ثم التقديم من الرابط الرسمي:</p>
+                <a href="#" target="_blank" id="applyLink" style="background-color:#2563eb; color:white; padding:12px 30px; border-radius:8px; text-decoration:none; font-weight:bold; display:inline-block;">🔗 التقديم الرسمي من هنا</a>
+            </div>
+        </div>
+    </main>
 
-      <a href="#"
-         target="_blank"
-         rel="noopener noreferrer"
-         class="share-btn"
-         id="sideApplyLink">
-         فتح رابط التقديم
-      </a>
-    </aside>
+    <script>
+        const API_URL = "https://script.google.com/macros/s/AKfycbyuskkfJ5nxLnupqF75P8gqW6yWyq-CDa2DiI0HsAO11v-XhhhX8HYk1Io--zbzAcUH/exec";
+        async function loadArticle() {
+            const id = new URLSearchParams(window.location.search).get("id");
+            try {
+                const res = await fetch(API_URL);
+                const article = (await res.json()).find(item => String(item.id) === String(id));
+                if (!article) return;
 
-  </div>
+                document.title = article.title + " | فرصتي";
+                document.getElementById("articleTitle").textContent = article.title;
+                document.getElementById("articleDescription").textContent = article.description;
 
-</main>
+                const originalBox = document.getElementById("articleOriginalText");
+                const details = String(article.details).trim();
+                if (details.startsWith("http")) {
+                    if (details.match(/\.(jpeg|jpg|png)$/i)) originalBox.innerHTML = `<img src="${details}" style="width:100%; border-radius:8px;">`;
+                    else originalBox.innerHTML = `<iframe src="https://docs.google.com/viewer?url=${encodeURIComponent(details)}&embedded=true" width="100%" height="700px" style="border:none; border-radius:8px;"></iframe>`;
+                } else {
+                    originalBox.textContent = details;
+                }
 
-<script>
-async function loadArticle() {
-  try {
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get("id");
-
-    // === تم تحديث الرابط هنا بنجاح ===
-    const res = await fetch("https://script.google.com/macros/s/AKfycbyuskkfJ5nxLnupqF75P8gqW6yWyq-CDa2DiI0HsAO11v-XhhhX8HYk1Io--zbzAcUH/exec");
-    const data = await res.json();
-
-    const article = data.find(item => String(item.id) === String(id));
-
-    if (!article) {
-      document.getElementById("articleTitle").textContent = "المقال غير موجود";
-      return;
-    }
-
-    document.title = article.title + " | فرصتي";
-
-    document.getElementById("articleTag").textContent = article.tag;
-    document.getElementById("articleTitle").textContent = article.title;
-    document.getElementById("articleDescription").textContent = article.description;
-
-    let cleanDate = article.date;
-    if (cleanDate && cleanDate.includes("T")) {
-        cleanDate = cleanDate.split("T")[0];
-    }
-
-    document.getElementById("articleDate").textContent = "📅 تاريخ النشر: " + cleanDate;
-    document.getElementById("articleCategory").textContent = "🏷️ التصنيف: " + article.tag;
-    document.getElementById("articleCountry").textContent = "🌍 الدولة: " + article.country;
-    document.getElementById("articleDeadline").textContent = "⏳ آخر أجل: " + article.deadline;
-
-    document.getElementById("infoCountry").textContent = article.country;
-    document.getElementById("infoStatus").textContent = article.status;
-    document.getElementById("articleIntro").textContent = article.intro;
-
-    const originalBox = document.getElementById("articleOriginalText");
-    const detailsContent = String(article.details).trim();
-
-    if (detailsContent.startsWith("http")) {
-      if (detailsContent.match(/\.(jpeg|jpg|gif|png)$/i)) {
-        originalBox.innerHTML = `<img src="${detailsContent}" alt="الإعلان الأصلي" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">`;
-      } else {
-        const viewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(detailsContent)}&embedded=true`;
-        originalBox.innerHTML = `<iframe src="${viewerUrl}" width="100%" height="650px" style="border: none; border-radius: 8px; background-color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1);"></iframe>`;
-      }
-    } else {
-      originalBox.textContent = detailsContent;
-    }
-
-    document.getElementById("articleHowToApply").textContent = article.howToApply;
-
-    const reqList = document.getElementById("articleRequirements");
-    reqList.innerHTML = "";
-    article.requirements.forEach(req => {
-      const li = document.createElement("li");
-      li.textContent = req;
-      reqList.appendChild(li);
-    });
-
-    const benList = document.getElementById("articleBenefits");
-    benList.innerHTML = "";
-    article.benefits.forEach(ben => {
-      const li = document.createElement("li");
-      li.textContent = ben;
-      benList.appendChild(li);
-    });
-
-    document.getElementById("applyLink").href = article.officialLink;
-    document.getElementById("sideApplyLink").href = article.officialLink;
-    document.getElementById("sideType").textContent = article.tag;
-
-  } catch (error) {
-    console.error(error);
-    const titleEl = document.getElementById("articleTitle");
-    if(titleEl) titleEl.textContent = "حدث خطأ في تحميل المقال";
-  }
-}
-
-loadArticle();
-</script>
-
+                const reqList = document.getElementById("articleRequirements");
+                article.requirements.forEach(req => reqList.innerHTML += `<li>${req}</li>`);
+                const benList = document.getElementById("articleBenefits");
+                article.benefits.forEach(ben => benList.innerHTML += `<li>${ben}</li>`);
+                
+                document.getElementById("applyLink").href = article.officialLink;
+            } catch (e) { document.getElementById("articleTitle").textContent = "خطأ في التحميل"; }
+        }
+        loadArticle();
+    </script>
 </body>
 </html>

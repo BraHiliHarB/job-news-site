@@ -1,149 +1,29 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>فرصتي | وظائف وهجرة ومنح</title>
-<meta name="description" content="أفضل موقع لفرص العمل والهجرة والمنح للشباب">
-
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فرصتي | أحدث الوظائف والمنح</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+    <header class="navbar">
+        <div class="brand">
+            <span class="logo">ف</span>
+            <span>فرصتي</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">الرئيسية</a>
+        </div>
+    </header>
 
-<header class="navbar">
+    <main class="container">
+        <h2 style="text-align: center; margin: 40px 0; color: #1e3a8a;">🔥 أحدث الفرص المتاحة</h2>
+        
+        <!-- هنا سيقوم السكريبت بوضع بطاقات الوظائف -->
+        <div id="jobsContainer" class="jobs-grid"></div>
+    </main>
 
-  <a href="index.html" class="brand">
-    <span class="logo">ف</span>
-    <span>فرصتي</span>
-  </a>
-
-  <button class="menu-btn" id="menuBtn">☰</button>
-
-  <nav class="nav-links" id="navLinks">
-    <a href="#">الرئيسية</a>
-    <a href="#jobs">وظائف</a>
-    <a href="#migration">هجرة</a>
-    <a href="#scholarships">منح</a>
-    <a href="#volunteer">تطوع</a>
-  </nav>
-
-  <a class="nav-cta" href="#latest">آخر الفرص</a>
-
-</header>
-
-<!-- HERO -->
-<section class="hero">
-
-  <div class="hero-content">
-
-    <span class="badge">🚀 منصة فرص للشباب</span>
-
-    <h1>
-      اكتشف أفضل الفرص حول العالم
-    </h1>
-
-    <p>
-      وظائف، منح، هجرة وتطوع — كل شيء في مكان واحد
-    </p>
-
-    <div class="search-box">
-      <input id="searchInput" type="text" placeholder="ابحث عن فرصة...">
-      <button id="searchBtn">بحث</button>
-    </div>
-
-    <div class="stats">
-      <div><b>+150</b><span>فرصة</span></div>
-      <div><b>+40</b><span>دولة</span></div>
-      <div><b>يومي</b><span>تحديث</span></div>
-    </div>
-
-  </div>
-
-  <div class="hero-card">
-    <div class="card-line"></div>
-
-    <h3>🔥 فرص اليوم</h3>
-
-    <p>💼 وظيفة في أوروبا</p>
-    <p>🎓 منحة ممولة</p>
-    <p>🌍 برنامج هجرة</p>
-    <p>🤝 تطوع دولي</p>
-
-  </div>
-
-</section>
-
-<!-- CATEGORIES -->
-<section class="categories">
-
-  <h2>الأقسام الرئيسية</h2>
-
-  <div class="category-grid">
-
-    <article id="jobs">
-      💼
-      <h3>وظائف</h3>
-      <p>فرص عمل محلية وعالمية</p>
-    </article>
-
-    <article id="migration">
-      🌍
-      <h3>هجرة</h3>
-      <p>برامج هجرة رسمية</p>
-    </article>
-
-    <article id="scholarships">
-      🎓
-      <h3>منح</h3>
-      <p>منح دراسية ممولة</p>
-    </article>
-
-    <article id="volunteer">
-      🤝
-      <h3>تطوع</h3>
-      <p>فرص تطوع دولية</p>
-    </article>
-
-  </div>
-
-</section>
-
-<!-- NEWS -->
-<section class="latest" id="latest">
-
-  <div class="section-title">
-    <h2>آخر الفرص</h2>
-  </div>
-
-  <div class="filters">
-    <button class="filter active" data-filter="all">الكل</button>
-    <button class="filter" data-filter="jobs">وظائف</button>
-    <button class="filter" data-filter="migration">هجرة</button>
-    <button class="filter" data-filter="scholarships">منح</button>
-    <button class="filter" data-filter="volunteer">تطوع</button>
-  </div>
-
-  <div class="news-grid" id="newsGrid"></div>
-
-</section>
-
-<!-- CTA -->
-<section class="cta">
-  <h2>🚀 قريباً: نشر تلقائي</h2>
-  <p>
-    سيتم جلب الأخبار تلقائياً من مصادر رسمية باستخدام الذكاء الاصطناعي
-  </p>
-</section>
-
-<footer>
-  <h3>فرصتي</h3>
-  <p>منصة ذكية للفرص العالمية</p>
-  <p>© 2026</p>
-</footer>
-
-<script src="script.js"></script>
-
+    <script src="script.js"></script>
 </body>
 </html>
