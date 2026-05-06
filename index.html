@@ -3,25 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فرصتي | أحدث الوظائف والمنح</title>
+    <title>بوابة التشغيل العمومي | الوظائف</title>
+    <!-- جلب خط Tajawal ليطابق الخطوط الرسمية الجملية -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header class="navbar">
-        <div class="brand">
-            <span class="logo">ف</span>
-            <span>فرصتي</span>
-        </div>
-        <div class="nav-links">
-            <a href="index.html">الرئيسية</a>
+
+    <!-- الشريط العلوي (Navbar) المطابق للموقع الرسمي -->
+    <header class="official-header">
+        <div class="header-container">
+            <div class="logo-area">
+                <img src="https://www.emploi-public.ma/ar/images/logo-ar.png" alt="المملكة المغربية" class="royal-logo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Coat_of_arms_of_Morocco.svg/120px-Coat_of_arms_of_Morocco.svg.png'">
+                <div class="site-titles">
+                    <span class="title-ar">المملكة المغربية</span>
+                    <span class="title-fr">Emploi-public.ma</span>
+                    <span class="title-sub">بوابة التشغيل العمومي</span>
+                </div>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="#" class="active">أبحث عن إعلان</a>
+                <a href="#">خاص بالموظفين</a>
+                <a href="#">الإدارات المنظمة</a>
+                <a href="#">نصوص قانونية</a>
+                <a href="#">خدماتنا</a>
+            </nav>
+
+            <!-- زر القائمة للهواتف -->
+            <button class="mobile-menu-btn">☰</button>
         </div>
     </header>
 
-    <main class="container">
-        <h2 style="text-align: center; margin: 40px 0; color: #1e3a8a;">🔥 أحدث الفرص المتاحة</h2>
-        
-        <!-- هنا سيقوم السكريبت بوضع بطاقات الوظائف -->
-        <div id="jobsContainer" class="jobs-grid"></div>
+    <!-- شريط البحث الوهمي (للمظهر فقط ليطابق الموقع) -->
+    <div class="search-toggle-bar">
+        <button class="toggle-arrow">⌄</button>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="main-content">
+        <div class="results-header">
+            <div class="view-controls">
+                <button class="view-btn active">📄</button>
+                <button class="view-btn">🔲</button>
+            </div>
+            <div class="results-count" id="resultsCount">جاري البحث عن الإعلانات...</div>
+        </div>
+
+        <!-- الحاوية التي سيتم حقن البطاقات بداخلها عبر JS -->
+        <div id="jobsContainer" class="official-jobs-list">
+            <!-- البطاقات ستظهر هنا -->
+        </div>
     </main>
 
     <script src="script.js"></script>

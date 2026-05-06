@@ -1,28 +1,94 @@
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-body { background-color: #f3f4f6; color: #1f2937; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+body { background-color: #f0f2f5; color: #333; overflow-x: hidden; }
 a { text-decoration: none; color: inherit; }
 
-/* Navbar */
-.navbar { background-color: #ffffff; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-.brand { display: flex; align-items: center; gap: 10px; font-size: 22px; font-weight: bold; color: #1e3a8a; }
-.logo { background-color: #1e3a8a; color: white; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-size: 20px; }
+/* === Header (الشريط العلوي) === */
+.official-header { background-color: #ffffff; border-top: 4px solid #cc9933; box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; }
+.header-container { max-width: 1200px; margin: 0 auto; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
+.logo-area { display: flex; align-items: center; gap: 15px; }
+.royal-logo { height: 60px; object-fit: contain; }
+.site-titles { display: flex; flex-direction: column; }
+.title-ar { color: #004b87; font-weight: 800; font-size: 16px; }
+.title-fr { color: #cc9933; font-weight: 700; font-size: 18px; }
+.title-sub { color: #004b87; font-size: 14px; font-weight: 500; }
 
-/* Container & Grid */
-.container { max-width: 1100px; margin: 0 auto; padding: 20px; }
-.jobs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+/* === Navigation === */
+.main-nav { display: flex; gap: 20px; }
+.main-nav a { color: #004b87; font-weight: 700; font-size: 15px; padding: 10px 5px; transition: color 0.3s; }
+.main-nav a:hover, .main-nav a.active { color: #cc9933; }
+.mobile-menu-btn { display: none; background: none; border: none; font-size: 24px; color: #004b87; cursor: pointer; }
 
-/* Job Card */
-.job-card { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s; display: flex; flex-direction: column; }
-.job-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
-.card-header { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 14px; }
-.tag { background-color: #e0e7ff; color: #4f46e5; padding: 4px 12px; border-radius: 20px; font-weight: bold; }
-.date { color: #6b7280; }
-.card-title { font-size: 18px; color: #111827; margin-bottom: 10px; line-height: 1.4; }
-.card-desc { color: #4b5563; font-size: 14px; margin-bottom: 20px; flex-grow: 1; }
-.card-meta { display: flex; justify-content: space-between; font-size: 13px; background: #f9fafb; padding: 10px; border-radius: 8px; margin-bottom: 15px; }
-.read-more-btn { display: block; text-align: center; background-color: #1e3a8a; color: white; padding: 10px; border-radius: 8px; font-weight: bold; }
+/* === Search Bar Area === */
+.search-toggle-bar { background-color: #e5e9f0; height: 30px; display: flex; justify-content: center; align-items: center; border-bottom: 1px solid #d1d5db; margin-bottom: 20px; }
+.toggle-arrow { background: white; border: 1px solid #d1d5db; border-top: none; padding: 0 20px; border-radius: 0 0 10px 10px; cursor: pointer; color: #666; font-size: 20px; transform: translateY(10px); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
 
-/* Article Page & Red Box */
-.article-page { background: white; padding: 40px; border-radius: 12px; margin-top: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-.original-offer-box { background-color: #fff5f5; border: 2px dashed #ef4444; border-radius: 12px; padding: 30px 20px; margin: 30px 0; position: relative; }
-.original-offer-badge { position: absolute; top: -16px; right: 20px; background-color: #ef4444; color: white; padding: 6px 18px; border-radius: 8px; font-weight: bold; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+/* === Main Content & Results Header === */
+.main-content { max-width: 1100px; margin: 0 auto; padding: 0 20px 40px; }
+.results-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; background: transparent; }
+.view-controls { display: flex; gap: 5px; }
+.view-btn { background: #cbd5e1; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-size: 16px; transition: 0.3s; }
+.view-btn.active { background: #38bdf8; color: white; }
+.results-count { color: #64748b; font-weight: 600; font-size: 15px; }
+
+/* === Job List & Cards (بطاقات الوظائف المطابقة) === */
+.official-jobs-list { display: flex; flex-direction: column; gap: 15px; }
+
+.job-row { 
+    background: #ffffff; 
+    border-radius: 8px; 
+    padding: 20px 25px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02); 
+    border: 1px solid #e2e8f0; 
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+.job-row:hover { transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.06); }
+
+/* الشعار الباهت في الخلفية (اليمين) */
+.job-row::before {
+    content: '';
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60px;
+    height: 60px;
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Coat_of_arms_of_Morocco.svg/120px-Coat_of_arms_of_Morocco.svg.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.05;
+    z-index: 0;
+}
+
+/* === تفاصيل الوظيفة (يمين البطاقة) === */
+.job-details { flex: 1; z-index: 1; padding-left: 20px; }
+.job-title { color: #003366; font-size: 18px; font-weight: 800; margin-bottom: 12px; line-height: 1.4; }
+
+.job-meta-list { display: flex; flex-direction: column; gap: 8px; }
+.meta-item { display: flex; align-items: center; gap: 8px; color: #475569; font-size: 14px; font-weight: 600; }
+/* أيقونات SVG لتطابق الأيقونات الرسمية */
+.meta-icon { width: 16px; height: 16px; fill: #64748b; }
+
+/* === الأزرار والإشعارات (يسار البطاقة) === */
+.job-actions { display: flex; align-items: center; gap: 15px; z-index: 1; }
+.btn-announce { background-color: #38a8a8; /* اللون الأخضر/الأزرق الخاص بهم */ color: #ffffff; padding: 8px 25px; border-radius: 20px; font-weight: 700; font-size: 14px; transition: background 0.3s; }
+.btn-announce:hover { background-color: #2c8585; }
+
+/* أيقونة الجرس الدائرية */
+.bell-icon-wrapper { width: 40px; height: 40px; border: 2px solid #003366; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.3s; }
+.bell-icon-wrapper:hover { background-color: #f0f4f8; }
+.bell-svg { width: 18px; height: 18px; fill: #003366; }
+
+/* === Responsive Mobile (الهواتف) === */
+@media (max-width: 850px) {
+    .main-nav { display: none; }
+    .mobile-menu-btn { display: block; }
+    .job-row { flex-direction: column; align-items: flex-start; gap: 20px; padding: 20px; }
+    .job-actions { width: 100%; justify-content: flex-end; border-top: 1px solid #f1f5f9; padding-top: 15px; }
+    .title-fr { font-size: 16px; }
+    .job-title { font-size: 16px; }
+}
