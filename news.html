@@ -9,7 +9,7 @@
 
 <link rel="stylesheet" href="style.css">
 <style>
-  /* تنسيقات الإطار الأحمر الخاص بالنص الأصلي */
+  /* تنسيقات الإطار الأحمر الخاص بالنص/الملف الأصلي */
   .original-offer-box {
     background-color: #fff5f5;
     border: 2px dashed #ef4444;
@@ -39,6 +39,7 @@
     line-height: 1.9;
     font-weight: bold;
     white-space: pre-wrap;
+    overflow: hidden;
   }
 </style>
 </head>
@@ -96,12 +97,12 @@
 
       <p id="articleIntro"></p>
 
-      <!-- الإطار الأحمر للنص الأصلي -->
+      <!-- الإطار الأحمر لعرض الإعلان الأصلي (PDF أو صورة أو نص) -->
       <div class="original-offer-box">
         <div class="original-offer-badge">
-          <span>🔴</span> الإعلان الأصلي (غير معدل)
+          <span>🔴</span> الإعلان الأصلي 
         </div>
-        <p class="original-offer-text" id="articleOriginalText"></p>
+        <div class="original-offer-text" id="articleOriginalText">جاري تحميل الإعلان الأصلي...</div>
       </div>
 
       <h2>📋 الشروط المطلوبة</h2>
@@ -168,7 +169,8 @@ async function loadArticle() {
     const params = new URLSearchParams(window.location.search);
     const id = params.get("id");
 
-    const res = await fetch("https://script.google.com/macros/s/AKfycby0OcWta_DLcycnumAyT_4kY79IOeJpsx6pAa1SJur4Dgr1zj90yPm--_k1zjtyqC6R/exec");
+    // === تم تحديث الرابط هنا بنجاح ===
+    const res = await fetch("https://script.google.com/macros/s/AKfycbyuskkfJ5nxLnupqF75P8gqW6yWyq-CDa2DiI0HsAO11v-XhhhX8HYk1Io--zbzAcUH/exec");
     const data = await res.json();
 
     const article = data.find(item => String(item.id) === String(id));
@@ -184,10 +186,9 @@ async function loadArticle() {
     document.getElementById("articleTitle").textContent = article.title;
     document.getElementById("articleDescription").textContent = article.description;
 
-    // إصلاح مشكلة التاريخ هنا
     let cleanDate = article.date;
     if (cleanDate && cleanDate.includes("T")) {
-        cleanDate = cleanDate.split("T")[0]; // يقتطع التاريخ فقط ويتجاهل الوقت
+        cleanDate = cleanDate.split("T")[0];
     }
 
     document.getElementById("articleDate").textContent = "📅 تاريخ النشر: " + cleanDate;
@@ -197,28 +198,49 @@ async function loadArticle() {
 
     document.getElementById("infoCountry").textContent = article.country;
     document.getElementById("infoStatus").textContent = article.status;
-
     document.getElementById("articleIntro").textContent = article.intro;
-    
-    // وضع النص الأصلي في الإطار الأحمر
-    // عرض النص الأصلي أو الـ PDF داخل الإطار الأحمر
+
     const originalBox = document.getElementById("articleOriginalText");
     const detailsContent = String(article.details).trim();
 
     if (detailsContent.startsWith("http")) {
-      // إذا كان الرابط صورة
       if (detailsContent.match(/\.(jpeg|jpg|gif|png)$/i)) {
         originalBox.innerHTML = `<img src="${detailsContent}" alt="الإعلان الأصلي" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">`;
-      } 
-      // إذا كان ملف PDF أو مرفق من التشغيل العمومي
-      else {
+      } else {
         const viewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(detailsContent)}&embedded=true`;
-        originalBox.innerHTML = `<iframe src="${viewerUrl}" width="100%" height="650px" style="border: none; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);"></iframe>`;
+        originalBox.innerHTML = `<iframe src="${viewerUrl}" width="100%" height="650px" style="border: none; border-radius: 8px; background-color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1);"></iframe>`;
       }
     } else {
-      // إذا لم يجد PDF، يعرض النص العادي
       originalBox.textContent = detailsContent;
     }
+
+    document.getElementById("articleHowToApply").textContent = article.howToApply;
+
+    const reqList = document.getElementById("articleRequirements");
+    reqList.innerHTML = "";
+    article.requirements.forEach(req => {
+      const li = document.createElement("li");
+      li.textContent = req;
+      reqList.appendChild(li);
+    });
+
+    const benList = document.getElementById("articleBenefits");
+    benList.innerHTML = "";
+    article.benefits.forEach(ben => {
+      const li = document.createElement("li");
+      li.textContent = ben;
+      benList.appendChild(li);
+    });
+
+    document.getElementById("applyLink").href = article.officialLink;
+    document.getElementById("sideApplyLink").href = article.officialLink;
+    document.getElementById("sideType").textContent = article.tag;
+
+  } catch (error) {
+    console.error(error);
+    const titleEl = document.getElementById("articleTitle");
+    if(titleEl) titleEl.textContent = "حدث خطأ في تحميل المقال";
+  }
 }
 
 loadArticle();
