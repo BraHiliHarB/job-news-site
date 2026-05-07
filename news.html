@@ -1,250 +1,174 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل الإعلان | بوابة التشغيل العمومي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css"> <style>
+        /* تنسيقات إضافية خاصة بصفحة التفاصيل فقط */
+        .news-container { max-width: 1000px; margin: 40px auto; padding: 0 20px; min-height: 70vh; }
+        .back-btn { display: inline-flex; align-items: center; gap: 8px; color: var(--primary); font-weight: 700; margin-bottom: 20px; transition: 0.3s; padding: 10px 20px; background: var(--surface); border-radius: 50px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .back-btn:hover { background: var(--primary); color: #fff; transform: translateX(5px); }
+        
+        .details-card { background: var(--surface); border-radius: 16px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); position: relative; overflow: hidden; margin-bottom: 30px; }
+        .details-title { color: var(--primary); font-size: 1.8rem; font-weight: 800; margin-bottom: 20px; line-height: 1.5; }
+        
+        .meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px; padding: 20px; background: var(--background); border-radius: 12px; border: 1px solid var(--border); }
+        .meta-box { display: flex; align-items: center; gap: 12px; }
+        .meta-box .icon { width: 45px; height: 45px; background: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--accent); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .meta-box .info { display: flex; flex-direction: column; }
+        .meta-box .info-label { font-size: 0.8rem; color: var(--text-muted); font-weight: 600; }
+        .meta-box .info-value { font-size: 1rem; color: var(--text-main); font-weight: 700; }
+        .deadline-value { color: #dc3545 !important; }
 
-<title>تفاصيل الفرصة | فرصتي</title>
-<meta name="description" content="تفاصيل الفرصة مع رابط التقديم الرسمي.">
-
-<link rel="stylesheet" href="style.css">
-<style>
-  /* تنسيقات الإطار الأحمر الخاص بالنص/الملف الأصلي */
-  .original-offer-box {
-    background-color: #fff5f5;
-    border: 2px dashed #ef4444;
-    border-radius: 12px;
-    padding: 28px 24px 24px;
-    margin: 35px 0;
-    position: relative;
-  }
-  .original-offer-badge {
-    position: absolute;
-    top: -16px;
-    right: 20px;
-    background-color: #ef4444;
-    color: white;
-    padding: 6px 18px;
-    border-radius: 8px;
-    font-weight: 900;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
-  }
-  .original-offer-text {
-    color: #7f1d1d;
-    font-size: 17px;
-    line-height: 1.9;
-    font-weight: bold;
-    white-space: pre-wrap;
-    overflow: hidden;
-  }
-</style>
+        .pdf-container { width: 100%; height: 800px; border-radius: 12px; overflow: hidden; border: 2px solid var(--border); background: var(--background); display: flex; justify-content: center; align-items: center; }
+        .pdf-container iframe { width: 100%; height: 100%; border: none; }
+        
+        .loader-container { text-align: center; padding: 100px 0; }
+        .loader-spinner { width: 50px; height: 50px; border: 4px solid var(--border); border-top: 4px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
 </head>
-
 <body>
 
-<header class="navbar">
-  <a href="index.html" class="brand">
-    <span class="logo">ف</span>
-    <span>فرصتي</span>
-  </a>
-
-  <a class="nav-cta" href="index.html">الرئيسية</a>
-</header>
-
-<main class="article-page">
-
-  <section class="article-hero">
-    <a href="index.html" class="back-link">← الرجوع إلى الرئيسية</a>
-
-    <span class="article-badge" id="articleTag">...</span>
-
-    <h1 class="article-title" id="articleTitle">جاري تحميل المقال...</h1>
-
-    <p class="article-subtitle" id="articleDescription"></p>
-
-    <div class="article-meta">
-      <span id="articleDate">📅 تاريخ النشر</span>
-      <span id="articleCategory">🏷️ التصنيف</span>
-      <span id="articleCountry">🌍 الدولة</span>
-      <span id="articleDeadline">⏳ آخر أجل</span>
-    </div>
-  </section>
-
-  <div class="article-layout">
-
-    <article class="article-content">
-
-      <div class="info-grid">
-        <div class="info-box">
-          <strong id="infoCountry">...</strong>
-          <span>الدولة</span>
+    <header class="header">
+        <div class="container header-wrapper">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 100 100" width="100%" height="100%">
+                        <circle cx="50" cy="50" r="45" fill="#004b87" opacity="0.1" />
+                        <path d="M50 15 L58 35 L80 35 L62 48 L70 70 L50 55 L30 70 L38 48 L20 35 L42 35 Z" fill="#004b87"/>
+                        <circle cx="50" cy="50" r="12" fill="#cc9933" />
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <span class="text-small">المملكة المغربية</span>
+                    <span class="text-bold">Emploi-public.ma</span>
+                    <span class="text-small">بوابة التشغيل العمومي</span>
+                </div>
+            </div>
+            <nav class="desktop-nav">
+                <a href="index.html">أبحث عن إعلان</a>
+                <a href="#">خاص بالموظفين</a>
+                <a href="#">الإدارات المنظمة</a>
+                <a href="#">نصوص قانونية</a>
+            </nav>
         </div>
+    </header>
 
-        <div class="info-box">
-          <strong>رسمي</strong>
-          <span>نوع الرابط</span>
-        </div>
-
-        <div class="info-box">
-          <strong id="infoStatus">...</strong>
-          <span>حالة التقديم</span>
-        </div>
-      </div>
-
-      <p id="articleIntro"></p>
-
-      <!-- الإطار الأحمر لعرض الإعلان الأصلي (PDF أو صورة أو نص) -->
-      <div class="original-offer-box">
-        <div class="original-offer-badge">
-          <span>🔴</span> الإعلان الأصلي 
-        </div>
-        <div class="original-offer-text" id="articleOriginalText">جاري تحميل الإعلان الأصلي...</div>
-      </div>
-
-      <h2>📋 الشروط المطلوبة</h2>
-      <ul id="articleRequirements"></ul>
-
-      <h2>💰 المميزات</h2>
-      <ul id="articleBenefits"></ul>
-
-      <h2>📝 طريقة التقديم</h2>
-      <p id="articleHowToApply"></p>
-
-      <div class="warning">
-        ⚠️ لا تدفع أي رسوم لأي وسيط. استخدم الرابط الرسمي فقط وتأكد من مصدر الإعلان.
-      </div>
-
-      <div class="apply-box">
-        <p>يُرجى قراءة الإعلان الأصلي في الأعلى بعناية، ثم اضغط هنا للانتقال إلى الموقع الرسمي للتقديم:</p>
-
-        <a href="#"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="apply-btn"
-           id="applyLink">
-           🔗 التقديم الرسمي من هنا
+    <main class="news-container">
+        <a href="index.html" class="back-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            العودة إلى قائمة المباريات
         </a>
-      </div>
 
-    </article>
+        <div id="jobDetailsContent">
+            <div class="loader-container">
+                <div class="loader-spinner"></div>
+                <h3 style="color: var(--primary);">جاري جلب تفاصيل القرار وقراءة ملف الإعلان...</h3>
+            </div>
+        </div>
+    </main>
 
-    <aside class="side-card">
-      <h3>ملخص سريع</h3>
+    <script>
+        const API_URL = "https://script.google.com/macros/s/AKfycbyuskkfJ5nxLnupqF75P8gqW6yWyq-CDa2DiI0HsAO11v-XhhhX8HYk1Io--zbzAcUH/exec";
 
-      <div class="side-item">
-        <b>نوع الفرصة</b>
-        <span id="sideType">...</span>
-      </div>
+        // أيقونات SVG للتفاصيل
+        const iconCalendar = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>`;
+        const iconBuilding = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><path d="M9 22v-4h6v4"></path></svg>`;
+        const iconLink = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>`;
 
-      <div class="side-item">
-        <b>الفئة</b>
-        <span>الشباب</span>
-      </div>
+        async function loadJobDetails() {
+            const container = document.getElementById('jobDetailsContent');
+            const urlParams = new URLSearchParams(window.location.search);
+            const jobId = urlParams.get('id');
 
-      <div class="side-item">
-        <b>الرابط</b>
-        <span>رسمي / خارجي</span>
-      </div>
+            if (!jobId) {
+                container.innerHTML = `<div class="details-card"><h3 style="color: red; text-align: center;">عذراً، لم يتم تحديد رقم المباراة.</h3></div>`;
+                return;
+            }
 
-      <a href="#"
-         target="_blank"
-         rel="noopener noreferrer"
-         class="share-btn"
-         id="sideApplyLink">
-         فتح رابط التقديم
-      </a>
-    </aside>
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                
+                // البحث عن الوظيفة المطلوبة عبر الـ ID
+                const job = data.find(item => String(item.id) === String(jobId));
 
-  </div>
+                if (!job) {
+                    container.innerHTML = `<div class="details-card"><h3 style="color: red; text-align: center;">عذراً، لم يتم العثور على تفاصيل هذه المباراة. قد تكون انتهت أو تم حذفها.</h3></div>`;
+                    return;
+                }
 
-</main>
+                let cleanDate = job.date ? String(job.date).split("T")[0] : "غير محدد";
+                let pdfLink = job.link || "";
+                
+                // تحويل روابط جوجل درايف للعمل داخل iframe إذا لزم الأمر
+                if (pdfLink.includes("drive.google.com/file/d/")) {
+                    pdfLink = pdfLink.replace("/view?usp=sharing", "/preview").replace("/view", "/preview");
+                }
 
-<script>
-async function loadArticle() {
-  try {
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get("id");
+                container.innerHTML = `
+                    <div class="details-card">
+                        <svg viewBox="0 0 100 100" style="position:absolute; top:20px; left:20px; width:150px; opacity:0.03; pointer-events:none;">
+                            <path d="M50 15 L58 35 L80 35 L62 48 L70 70 L50 55 L30 70 L38 48 L20 35 L42 35 Z" fill="#004b87"/>
+                            <circle cx="50" cy="50" r="12" fill="#cc9933" />
+                        </svg>
 
-    // === تم تحديث الرابط هنا بنجاح ===
-    const res = await fetch("https://script.google.com/macros/s/AKfycbyuskkfJ5nxLnupqF75P8gqW6yWyq-CDa2DiI0HsAO11v-XhhhX8HYk1Io--zbzAcUH/exec");
-    const data = await res.json();
+                        <h1 class="details-title">${job.title}</h1>
 
-    const article = data.find(item => String(item.id) === String(id));
+                        <div class="meta-grid">
+                            <div class="meta-box">
+                                <div class="icon">${iconBuilding}</div>
+                                <div class="info">
+                                    <span class="info-label">القطاع المنظم</span>
+                                    <span class="info-value">${job.category || 'إدارة عمومية / مؤسسة'}</span>
+                                </div>
+                            </div>
+                            <div class="meta-box">
+                                <div class="icon">${iconCalendar}</div>
+                                <div class="info">
+                                    <span class="info-label">تاريخ النشر</span>
+                                    <span class="info-value">${cleanDate}</span>
+                                </div>
+                            </div>
+                            <div class="meta-box">
+                                <div class="icon" style="color: #dc3545;">${iconCalendar}</div>
+                                <div class="info">
+                                    <span class="info-label">آخر أجل لإيداع الترشيحات</span>
+                                    <span class="info-value deadline-value">${job.deadline || 'غير محدد'}</span>
+                                </div>
+                            </div>
+                            <div class="meta-box">
+                                <div class="icon">${iconLink}</div>
+                                <div class="info">
+                                    <span class="info-label">المصدر الأصلي</span>
+                                    <span class="info-value"><a href="${job.link}" target="_blank" style="color: var(--primary); text-decoration: underline;">رابط الإعلان</a></span>
+                                </div>
+                            </div>
+                        </div>
 
-    if (!article) {
-      document.getElementById("articleTitle").textContent = "المقال غير موجود";
-      return;
-    }
+                        <h3 style="color: var(--primary); margin-bottom: 15px; font-weight: 800;">قرار الإعلان (ملف PDF):</h3>
+                        
+                        ${pdfLink ? `
+                            <div class="pdf-container">
+                                <iframe src="${pdfLink}"></iframe>
+                            </div>
+                        ` : `
+                            <div style="padding: 40px; text-align: center; background: #f8d7da; color: #721c24; border-radius: 12px; font-weight: bold;">
+                                لا يوجد ملف PDF مرفق مع هذا الإعلان. يرجى زيارة الرابط الأصلي.
+                            </div>
+                        `}
+                    </div>
+                `;
 
-    document.title = article.title + " | فرصتي";
+            } catch (error) {
+                container.innerHTML = `<div class="details-card"><h3 style="color: red; text-align: center;">حدث خطأ في الاتصال بالخادم. يرجى المحاولة لاحقاً.</h3></div>`;
+            }
+        }
 
-    document.getElementById("articleTag").textContent = article.tag;
-    document.getElementById("articleTitle").textContent = article.title;
-    document.getElementById("articleDescription").textContent = article.description;
-
-    let cleanDate = article.date;
-    if (cleanDate && cleanDate.includes("T")) {
-        cleanDate = cleanDate.split("T")[0];
-    }
-
-    document.getElementById("articleDate").textContent = "📅 تاريخ النشر: " + cleanDate;
-    document.getElementById("articleCategory").textContent = "🏷️ التصنيف: " + article.tag;
-    document.getElementById("articleCountry").textContent = "🌍 الدولة: " + article.country;
-    document.getElementById("articleDeadline").textContent = "⏳ آخر أجل: " + article.deadline;
-
-    document.getElementById("infoCountry").textContent = article.country;
-    document.getElementById("infoStatus").textContent = article.status;
-    document.getElementById("articleIntro").textContent = article.intro;
-
-    const originalBox = document.getElementById("articleOriginalText");
-    const detailsContent = String(article.details).trim();
-
-    if (detailsContent.startsWith("http")) {
-      if (detailsContent.match(/\.(jpeg|jpg|gif|png)$/i)) {
-        originalBox.innerHTML = `<img src="${detailsContent}" alt="الإعلان الأصلي" style="width: 100%; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">`;
-      } else {
-        const viewerUrl = `https://docs.google.com/viewer?url=${encodeURIComponent(detailsContent)}&embedded=true`;
-        originalBox.innerHTML = `<iframe src="${viewerUrl}" width="100%" height="650px" style="border: none; border-radius: 8px; background-color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1);"></iframe>`;
-      }
-    } else {
-      originalBox.textContent = detailsContent;
-    }
-
-    document.getElementById("articleHowToApply").textContent = article.howToApply;
-
-    const reqList = document.getElementById("articleRequirements");
-    reqList.innerHTML = "";
-    article.requirements.forEach(req => {
-      const li = document.createElement("li");
-      li.textContent = req;
-      reqList.appendChild(li);
-    });
-
-    const benList = document.getElementById("articleBenefits");
-    benList.innerHTML = "";
-    article.benefits.forEach(ben => {
-      const li = document.createElement("li");
-      li.textContent = ben;
-      benList.appendChild(li);
-    });
-
-    document.getElementById("applyLink").href = article.officialLink;
-    document.getElementById("sideApplyLink").href = article.officialLink;
-    document.getElementById("sideType").textContent = article.tag;
-
-  } catch (error) {
-    console.error(error);
-    const titleEl = document.getElementById("articleTitle");
-    if(titleEl) titleEl.textContent = "حدث خطأ في تحميل المقال";
-  }
-}
-
-loadArticle();
-</script>
-
+        document.addEventListener("DOMContentLoaded", loadJobDetails);
+    </script>
 </body>
 </html>

@@ -3,26 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بوابة التشغيل العمومي | الوظائف</title>
-    <!-- جلب خط Tajawal ليطابق الخطوط الرسمية الجملية -->
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <title>البوابة الوطنية للتشغيل العمومي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- الشريط العلوي (Navbar) المطابق للموقع الرسمي -->
-    <header class="official-header">
-        <div class="header-container">
-            <div class="logo-area">
-                <img src="https://www.emploi-public.ma/ar/images/logo-ar.png" alt="المملكة المغربية" class="royal-logo" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Coat_of_arms_of_Morocco.svg/120px-Coat_of_arms_of_Morocco.svg.png'">
-                <div class="site-titles">
-                    <span class="title-ar">المملكة المغربية</span>
-                    <span class="title-fr">Emploi-public.ma</span>
-                    <span class="title-sub">بوابة التشغيل العمومي</span>
+    <header class="header">
+        <div class="container header-wrapper">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 100 100" width="100%" height="100%">
+                        <circle cx="50" cy="50" r="45" fill="#004b87" opacity="0.1" />
+                        <path d="M50 15 L58 35 L80 35 L62 48 L70 70 L50 55 L30 70 L38 48 L20 35 L42 35 Z" fill="#004b87"/>
+                        <circle cx="50" cy="50" r="12" fill="#cc9933" />
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <span class="text-small">المملكة المغربية</span>
+                    <span class="text-bold">Emploi-public.ma</span>
+                    <span class="text-small">بوابة التشغيل العمومي</span>
                 </div>
             </div>
-            
-            <nav class="main-nav">
+
+            <nav class="desktop-nav">
                 <a href="#" class="active">أبحث عن إعلان</a>
                 <a href="#">خاص بالموظفين</a>
                 <a href="#">الإدارات المنظمة</a>
@@ -30,31 +34,73 @@
                 <a href="#">خدماتنا</a>
             </nav>
 
-            <!-- زر القائمة للهواتف -->
-            <button class="mobile-menu-btn">☰</button>
+            <div class="header-actions">
+                <button class="btn btn-login">تسجيل الدخول</button>
+                <button class="btn btn-admin">فضاء الادارة</button>
+            </div>
+
+            <button class="mobile-toggle" id="mobileToggle">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width=\"2\"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </div>
+        
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="#">أبحث عن إعلان</a>
+            <a href="#">خاص بالموظفين</a>
+            <a href="#">الإدارات المنظمة</a>
+            <a href="#">نصوص قانونية</a>
+            <a href="#">خدماتنا</a>
         </div>
     </header>
 
-    <!-- شريط البحث الوهمي (للمظهر فقط ليطابق الموقع) -->
-    <div class="search-toggle-bar">
-        <button class="toggle-arrow">⌄</button>
-    </div>
-
-    <!-- المحتوى الرئيسي -->
-    <main class="main-content">
-        <div class="results-header">
-            <div class="view-controls">
-                <button class="view-btn active">📄</button>
-                <button class="view-btn">🔲</button>
+    <main>
+        <section class="hero-section">
+            <div class="container hero-content">
+                <h2 class="hero-subtitle">البوابة الوطنية</h2>
+                <h1 class="hero-title">للتشغيل العمومي</h1>
+                
+                <div class="search-container">
+                    <input type="text" placeholder="الكلمات المفتاحية..." class="search-input">
+                    <div class="search-divider"></div>
+                    <button class="search-filter">نوع الإعلان ▼</button>
+                    <button class="search-button">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </button>
+                </div>
             </div>
-            <div class="results-count" id="resultsCount">جاري البحث عن الإعلانات...</div>
-        </div>
+        </section>
 
-        <!-- الحاوية التي سيتم حقن البطاقات بداخلها عبر JS -->
-        <div id="jobsContainer" class="official-jobs-list">
-            <!-- البطاقات ستظهر هنا -->
-        </div>
+        <section class="stats-section container">
+            <div class="stats-grid">
+                <div class="stat-box primary-box">
+                    <div class="stat-number">10 056</div>
+                    <div class="stat-label">مباريات التوظيف</div>
+                </div>
+                <div class="stat-box accent-box">
+                    <div class="stat-number" id="liveJobsCount">...</div>
+                    <div class="stat-label">إعلانات نشطة الآن</div>
+                </div>
+                <div class="stat-box accent-box">
+                    <div class="stat-number">5 373</div>
+                    <div class="stat-label">مناصب المسؤولية</div>
+                </div>
+                <div class="stat-box secondary-box">
+                    <div class="stat-number">32</div>
+                    <div class="stat-label">تشغيل الخبراء</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="jobs-section container">
+            <h2 class="section-heading">المباريات المفتوحة</h2>
+            
+            <div class="jobs-grid" id="jobsContainer">
+                <div class="loading-state">جاري مزامنة الإعلانات مع قاعدة البيانات... ⏳</div>
+            </div>
+        </section>
     </main>
+
+    <div id="toaster" class="toaster-container"></div>
 
     <script src="script.js"></script>
 </body>
