@@ -1,7 +1,7 @@
-// 1. إعداد رابط البيانات (الرابط الذي حصلت عليه من Google Apps Script)
+// 1. إعداد رابط البيانات - تأكد من استخدام أحدث رابط Deployment
 const API_URL = "https://script.google.com/macros/s/AKfycbxIliIDLQ1JaKdpQhpKSAlMoS0OXr3Rvx04eaLWxGLfFU7hIfJQQVEp4jb0XTl28glH/exec";
 
-// 2. برمجة قائمة الهاتف (Mobile Menu)
+// 2. برمجة قائمة الهاتف
 const mobileToggle = document.getElementById('mobileToggle');
 const mobileMenu = document.getElementById('mobileMenu');
 if(mobileToggle) {
@@ -10,7 +10,7 @@ if(mobileToggle) {
     });
 }
 
-// 3. نظام الإشعارات (Toast System)
+// 3. نظام الإشعارات
 function showToast(message) {
     const container = document.getElementById('toaster');
     if(!container) return;
@@ -26,19 +26,19 @@ function showToast(message) {
     }, 3000);
 }
 
-// 4. أيقونات SVG الاحترافية
+// 4. الأيقونات
 const iconBuilding = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><path d="M9 22v-4h6v4"></path></svg>`;
 const iconCalendar = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>`;
 const iconBriefcase = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>`;
 const iconBell = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>`;
 const svgEmblem = `<svg viewBox="0 0 100 100" width="22" height="22"><path d="M50 15 L58 35 L80 35 L62 48 L70 70 L50 55 L30 70 L38 48 L20 35 L42 35 Z" fill="#d4af37"/></svg>`;
 
-// 5. دالة العداد التصاعدي (Counter Animation)
+// 5. العداد
 function animateCounter(id, target) {
     const el = document.getElementById(id);
-    if(!el) return;
+    if(!el || isNaN(target)) return;
     let current = 0;
-    const step = target / 50; 
+    const step = Math.max(target / 50, 1); 
     const timer = setInterval(() => {
         current += step;
         if (current >= target) {
@@ -50,95 +50,61 @@ function animateCounter(id, target) {
     }, 30);
 }
 
-// 6. جلب البيانات وعرضها (Main Logic)
+// 6. جلب البيانات (المحرك الرئيسي)
 async function loadJobs() {
     const container = document.getElementById("jobsContainer");
     if(!container) return;
     
     try {
         const response = await fetch(API_URL);
+        if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
+        
         container.innerHTML = "";
 
         if (!data || data.length === 0) {
-            container.innerHTML = '<div class="loading-state" style="color: #d4af37;">لا توجد فرص متاحة حالياً في قاعدة البيانات.</div>';
+            container.innerHTML = '<div class="loading-state" style="color: #d4af37; text-align:center; width:100%;">لا توجد فرص متاحة حالياً.</div>';
             return;
         }
 
-        // ترتيب البيانات من الأحدث للأقدم
         const reversedData = data.slice().reverse();
-        
-        let countJobs = 0, countImmigration = 0, countScholarships = 0, countVolunteer = 0;
+        let counts = { وظيفة: 0, هجرة: 0, منحة: 0, تطوع: 0 };
 
         reversedData.forEach(item => {
-            let textToSearch = `${item.title} ${item.category} ${item.tag}`.toLowerCase();
-            let tagType = item.tag ? item.tag.toLowerCase() : "وظيفة";
+            let tag = (item.tag || "وظيفة").trim();
+            if (counts.hasOwnProperty(tag)) counts[tag]++; else counts["وظيفة"]++;
 
-            // حساب الإحصائيات بناءً على الكلمات المفتاحية أو التاج
-            if (textToSearch.includes("تطوع") || tagType.includes("تطوع")) countVolunteer++;
-            else if (textToSearch.includes("هجرة") || textToSearch.includes("خارج") || tagType.includes("هجرة")) countImmigration++;
-            else if (textToSearch.includes("منح") || tagType.includes("منح")) countScholarships++;
-            else countJobs++;
-
-            // تنسيق التاريخ
-            let cleanDate = item.publish || item.date || "جديد";
-            let department = item.category || "إدارة عمومية";
-
-            // --- داخل حلقة الـ reversedData.forEach ---
-
-            // التأكد من جلب الرابط الصحيح من الشيت (قد يكون الاسم officiallink أو official-link)
-            let targetLink = item.officiallink || item['official-link'] || item.link || item.date;
-
-            // إذا كان الرابط لا يبدأ بـ http (مثلاً نص عادي)، نضع رابطاً احتياطياً لمنع الخطأ
-            if (!targetLink || typeof targetLink !== 'string' || !targetLink.startsWith('http')) {
-                targetLink = "#"; 
-            }
+            let targetLink = item.officiallink || item['official-link'] || item.link || item.date || "#";
+            let cleanDate = item.publish || item.date || "قريباً";
 
             const card = document.createElement("div");
             card.className = "job-card";
             card.innerHTML = `
-               <div class="card-header">
-                   <button class="bell-btn" onclick="showToast('تم تفعيل إشعارات الفرصة')" title="تفعيل الإشعارات">${iconBell}</button>
-                    <div class="icon-group">
-                        <div class="icon-box">${svgEmblem}</div>
-                        <div class="icon-box">${iconBuilding}</div>
-                   </div>
-               </div>
-               <h3 class="job-title">${item.title}</h3>
-               <div class="job-dept">
-                   <span>${department}</span>
-                   ${iconBuilding}
-               </div>
-    
-               <a href="${targetLink}" target="_blank" rel="noopener noreferrer" class="announce-btn">
-                   مشاهدة الإعلان الأصلي
-              </a>
-
-               <div class="card-footer">
-                   <div class="meta-item">
-                       <span>النوع: ${item.tag || 'وظيفة'}</span>
-                      ${iconBriefcase}
-                    </div>
-                   <div class="meta-item">
-                        <span>نشر في: ${cleanDate}</span>
-                        ${iconCalendar}
-                   </div>
+                <div class="card-header">
+                    <button class="bell-btn" onclick="showToast('تم تفعيل الإشعارات')" title="تفعيل الإشعارات">${iconBell}</button>
+                    <div class="icon-group"><div class="icon-box">${svgEmblem}</div><div class="icon-box">${iconBuilding}</div></div>
+                </div>
+                <h3 class="job-title">${item.title}</h3>
+                <div class="job-dept"><span>${item.category || "عام"}</span>${iconBuilding}</div>
+                <a href="${targetLink}" target="_blank" rel="noopener noreferrer" class="announce-btn">مشاهدة الإعلان الأصلي</a>
+                <div class="card-footer">
+                    <div class="meta-item"><span>${tag}</span>${iconBriefcase}</div>
+                    <div class="meta-item"><span>${cleanDate}</span>${iconCalendar}</div>
                 </div>
             `;
             container.appendChild(card);
         });
 
-        // تشغيل العدادات في الهيدر
-        animateCounter("statJobs", countJobs);
-        animateCounter("statImmigration", countImmigration);
-        animateCounter("statScholarships", countScholarships);
-        animateCounter("statVolunteer", countVolunteer);
+        // تشغيل العدادات
+        animateCounter("statJobs", counts["وظيفة"]);
+        animateCounter("statImmigration", counts["هجرة"]);
+        animateCounter("statScholarships", counts["منحة"]);
+        animateCounter("statVolunteer", counts["تطوع"]);
 
     } catch (error) {
         console.error("Connection Error:", error);
-        container.innerHTML = '<div class="loading-state" style="color: #dc3545;">فشل الاتصال بقاعدة بيانات JoobBank.</div>';
+        container.innerHTML = '<div class="loading-state" style="color: #dc3545; text-align:center; width:100%;">فشل الاتصال بقاعدة البيانات. تأكد من إعدادات النشر في Google Script.</div>';
     }
 }
 
-// البدء عند التحميل
 document.addEventListener("DOMContentLoaded", loadJobs);
