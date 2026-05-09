@@ -84,31 +84,45 @@ async function loadJobs() {
             let cleanDate = item.publish || item.date || "جديد";
             let department = item.category || "إدارة عمومية";
 
+            // --- داخل حلقة الـ reversedData.forEach ---
+
+            // التأكد من جلب الرابط الصحيح من الشيت (قد يكون الاسم officiallink أو official-link)
+            let targetLink = item.officiallink || item['official-link'] || item.link || item.date;
+
+            // إذا كان الرابط لا يبدأ بـ http (مثلاً نص عادي)، نضع رابطاً احتياطياً لمنع الخطأ
+            if (!targetLink || typeof targetLink !== 'string' || !targetLink.startsWith('http')) {
+                targetLink = "#"; 
+            }
+
             const card = document.createElement("div");
             card.className = "job-card";
             card.innerHTML = `
-                <div class="card-header">
-                    <button class="bell-btn" onclick="showToast('تم تفعيل إشعارات الفرصة')" title="تفعيل الإشعارات">${iconBell}</button>
+               <div class="card-header">
+                   <button class="bell-btn" onclick="showToast('تم تفعيل إشعارات الفرصة')" title="تفعيل الإشعارات">${iconBell}</button>
                     <div class="icon-group">
                         <div class="icon-box">${svgEmblem}</div>
                         <div class="icon-box">${iconBuilding}</div>
+                   </div>
+               </div>
+               <h3 class="job-title">${item.title}</h3>
+               <div class="job-dept">
+                   <span>${department}</span>
+                   ${iconBuilding}
+               </div>
+    
+               <a href="${targetLink}" target="_blank" rel="noopener noreferrer" class="announce-btn">
+                   مشاهدة الإعلان الأصلي
+              </a>
+
+               <div class="card-footer">
+                   <div class="meta-item">
+                       <span>النوع: ${item.tag || 'وظيفة'}</span>
+                      ${iconBriefcase}
                     </div>
-                </div>
-                <h3 class="job-title">${item.title}</h3>
-                <div class="job-dept">
-                    <span>${department}</span>
-                    ${iconBuilding}
-                </div>
-                <a href="news.html?id=${item.id}" class="announce-btn">التفاصيل والإعلان</a>
-                <div class="card-footer">
-                    <div class="meta-item">
-                        <span>النوع: ${item.tag || 'وظيفة'}</span>
-                        ${iconBriefcase}
-                    </div>
-                    <div class="meta-item">
+                   <div class="meta-item">
                         <span>نشر في: ${cleanDate}</span>
                         ${iconCalendar}
-                    </div>
+                   </div>
                 </div>
             `;
             container.appendChild(card);
